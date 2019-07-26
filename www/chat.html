@@ -1,0 +1,140 @@
+<link rel="stylesheet" type="text/css" href="./assets/bootstrap-3.3.7/css/bootstrap.min.css"/>
+<div class="page-content" data-role="content" id="chat">
+    <!-- <span>Boa noite <b>Juliana</b>, Você está no restaurante/boate
+        <span id='restaurante-chat'></span>
+    </span> -->
+
+    <ul id="chat-area"></ul>
+
+    <div id="chat-enviar">
+        <textarea placeholder=" Digite sua mensagem aqui..." style="float:left;"></textarea>
+        <img src='img/sendBtn.png' id="btnEnviar" style="padding:0;margin-top: 1.2em;"/>
+    </div>
+
+    <p/>
+    <div style="clear:both"></div>
+    <div class="rodape" data-role="footer" data-position="fixed" data-tap-toggle="false"
+         data-visible-on-page-show="false">
+        <a href="" class="link-rodape"><img src="img/rod-cut.png" alt=""></a>
+        <a href="" class="link-rodape"><img src="img/rod-gar.png" alt=""></a>
+        <a href="" class="link-maior"><img src="img/rod-fidelidade.png" alt=""></a>
+        <a href="" class="link-rodape"><img src="img/rod-comp.png" alt=""></a>
+        <a href="" class="link-rodape"><img src="img/rod-local.png" alt=""></a>
+
+    </div>
+
+    <script type="text/javascript">
+
+        var id = window.localStorage.getItem('usuarioId');
+        var servidor = window.localStorage.getItem('servidor');
+        var dados = window.localStorage.getItem('dados');
+        var nome = window.localStorage.getItem('nome');
+        var restauranteChat = window.localStorage.getItem('restNome');
+        var idchat = window.localStorage.getItem('idchat');
+
+        if(idchat == null || idchat == undefined){
+            idchat = 0;
+        }
+
+        $("#restaurante-chat").text(restauranteChat);
+        $('#chat span b').text(nome);
+
+        //var alt = $(window).height() * 0.70;
+        //$('#chat ul').css('height', alt + 'px');
+
+        $(document).ready(function () {
+            escondeRodape(true);
+            atualiza2(); // esta função é carregada em avisos.html
+        });
+
+        function atualiza() {
+            //alert('ENTROU ATUALIZAR');
+            $.post(servidor + 'chat.php', {
+                id: id,
+                para: dados,
+                acao: 'atualiza',
+                msg: '',
+                id_chat: idchat,
+                serv: servidor
+            })
+                .done(function (data) {
+                    $('#chat ul').html(data);
+                    updateScroll();
+                    //console.log('ATUALIZOU');
+                })
+        }
+
+        $("#btnEnviar").click(function () {
+            var msg = $('#chat-enviar textarea').val();
+            var idchat = document.getElementById('chat-area').getElementsByTagName('li')[0].getAttribute('idchat');
+
+            // Valida preenchimento
+            if (msg.length > 1) {
+
+                $.post(servidor + 'chat.php', {
+                    id: id,
+                    para: dados,
+                    acao: 'envia',
+                    msg: msg,
+                    id_chat: idchat,
+                    serv: servidor
+                }, function () {
+                    $('#chat-enviar textarea').val('');
+                })
+                    .done(function (data) {
+                        atualiza();
+                    });
+            }
+        });
+
+        var scrolled = false;
+
+        function updateScroll() {
+            //if(!scrolled){
+            $('#chat-area').animate({scrollTop: $('#chat-area').prop('scrollHeight')}, 200)
+            //console.log(element.scrollTop);
+            //   }
+        }
+
+        $("#chat-area").on('scroll', function () {
+            scrolled = true;
+        });
+
+        // Curtir drink
+        function likeDrink(valida = 1, id) {
+
+            var posting = $.post(servidor + 'curtir_drink.php', {
+                id: id,
+                valida: valida,
+                serv: servidor
+            });
+
+            posting.done(function (data) {
+                atualiza();
+            });
+        }
+
+        // Curtir drink
+        function goDrink(valida = 1, id) {
+
+            var posting = $.post(servidor + 'aceitar_drink.php', {
+                id: id,
+                valida: valida,
+                serv: servidor
+            });
+
+            posting.done(function (data) {
+                atualiza();
+            });
+        }
+
+        // navigator.Backbutton.goHome(function(){
+
+        // })
+
+        $(document).on("click",".btn-sm",function() {
+            $(this).parent().find('.btn-sm').remove();
+        });
+    </script>
+</div>
+<!-- ###############################FIM-PÁGINA-CHAT############################### -->

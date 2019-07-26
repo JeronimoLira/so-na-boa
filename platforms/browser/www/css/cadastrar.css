@@ -1,0 +1,9 @@
+#btn_aceitar_termos{
+	float: right;
+	background-color: #aaa;
+}
+
+#btn_cancelar{
+	float: right;
+	background-color: red;
+}

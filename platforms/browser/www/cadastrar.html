@@ -1,0 +1,127 @@
+<!--###############################PÁGINA-CADASTRO############################### -->
+<div class="page-content" data-role="content" id="pag-cadastro">
+   <!-- <script>
+        $('body').css('background-image','url(img/bg-cadastro.png)');    
+    </script>	
+	-->
+    <div data-role="content">
+        <div id="cadastro">
+            <div id="form_cadastro" class="ui-content" style="padding-top:-100px;">            
+                <div class="carregando">
+                    <span id="cadastro-fechar">Fechar.</span>
+                    <div><img src="img/ring.gif" alt="carregando" class="gif"></div>
+                    <button id="btn-crop" style="height:40px;width:80px;">Recortar</button>
+                    <input type="hidden" id="x">
+                    <input type="hidden" id="y">
+                    <input type="hidden" id="x2">
+                    <input type="hidden" id="y2">
+                    <input type="hidden" id="w">
+                    <input type="hidden" id="h">
+                    <input type="hidden" id="iw">
+                    <input type="hidden" id="ih">
+                </div>
+                <img class="img-icone" src="img/menu_cadastro.png">
+                <h1 class="label-cadastro">CADASTRAR</h1>
+                <input  name="nome" placeholder=" Nome Completo" />                
+                <select  name="sexo"  class="cadastro-esq" data-role="none" > 
+                    <option value="0">Você é...</option>
+                    <option value="Homem">Homem</option>
+                    <option value="Mulher">Mulher</option>
+                    <option value="Bissexual">Bissexual</option>
+                    <option value="Gay">Gay</option>
+                    <option value="Lésbica">Lésbica</option>
+                    <option value="Travesti/Transexual">Travesti/Transexual</option>
+                </select>                
+                
+                <input name="aniversario" class="cadastro-dir" placeholder=" Nascimento" type="text" data-mask="00/00/0000"     data-mask-selectonfocus="true" autocomplete="off" maxlength="10" />
+                <input name="codinome"    class="cadastro-esq" placeholder=" Codinome" />            
+                <input name="telefone"    class="cadastro-dir" placeholder=" Celular"    type="text" data-mask="(00)00000-0000" data-mask-selectonfocus="true"/>
+                <input name="cadSenha"    class="cadastro-esq" placeholder=" Senha" type="password" />
+                <input name="confSenha"   class="cadastro-dir" placeholder=" Confirmar senha" type="password" />
+                <input name="frase"                            placeholder=" Editar Frase do seu perfil" />
+                
+                <select name="estadoCivil" class="cadastro-esq" data-role="none" >
+                    <option value="0">Estado Civil</option>
+                    <option value="Solteiro">Solteiro</option>
+                    <option value="Casado">Casado</option>
+                    <option value="Namorando">Namorando</option>
+                    <option value="Divorciado">Divorciado</option>
+                    <option value="Outros">Outros</option>                    
+                </select>
+                
+                <!-- cad-imagens antiga classe do form q carregava imagem 2x-->
+                <form class="cadastro-dir" id="cad-imagens" method="post" action="http://sonaboa.net/imagem.php" data-role="none" enctype="multipart/form-data">
+                    <input type="file" id="cad-foto" name="cad-foto" accept="image/*" >
+                </form>
+
+                <input name="foto" class="cadastro-dir" placeholder="Editar fotos" />
+                <input type="hidden" id="foto-cad" name="foto_cad">
+                
+                <select name="interesse" data-role="none" >
+                    <option value="">Agora você está interessado em...</option>
+                    <option value="Homem">Homem</option>
+                    <option value="Mulher">Mulher</option>
+                    <option value="Homem e Mulher">Homem e Mulher</option>
+                </select>
+
+                <!-- Combobox Estado -->
+                <select class="cadastro-uf" name="uf" id="cod_estados" onchange="populaCidades(true)"></select>
+                
+                <!-- Combobox Cidade -->            
+                <select class="cadastro-cidade" name="cidade" id="cod_cidades"></select>
+
+                <!-- Loading -->
+                <div class="div-cidade">
+                    <img src="img/ring.gif" alt="carregando" class="carregando-cidade-gif">
+                </div>
+
+                <input name="rg" type="text" placeholder=" RG" data-mask="00.000.000-0" data-mask-selectonfocus="true"/>
+                <h1 class="h1-opcao">OPÇÕES</h1>
+                <select name="idioma" class="cadastro-dir" data-role="none">
+                    <option value="">Seu Idioma</option>
+                    <option value="Português">Português</option>
+                    <option value="Inglês">Inglês</option>
+                    <option value="Espanhol">Espanhol</option>
+                    <option value="Francês">Francês</option>
+                    <option value="Alemão">Alemão</option>
+                </select>
+            
+                <div id="cadastre-se">
+                    <a id="btn-cadastro-usuario" class="btn-cadastro">
+                        <img src="img/btn-cadastre.png" alt="Cadastre-se" />
+                        CADASTRAR-SE
+                    </a>
+                </div>
+
+                <div id="cadastro-termos">
+                    <h1>Termos e Condições de Uso</h1>
+                    <div>O conteúdo deste programa é para sua informação e uso geral. Ele está sujeito a alteração sem aviso prévio. Os cadastros de usuario devem ser individuais, um usuario deve ter apenas uma conta, a criação de contas falsas para mau-uso poderá ser classificado como crime de falsidade ideologica. O uso de qualquer informação ou recurso desse programa é inteiramente por sua conta e risco. Será sua responsabilidade para assegurar que quaisquer produtos, serviços ou informação disponibilizada através deste programa atenda as suas necessidades específicas. Este programa contém material que é de propriedade ou licenciados. Este material inclui , mas não está limitado a: imagens, produtos, graficos, ofertas e estatisticas. Todas as marcas reproduzidas neste programa, que não são propriedade da, ou licenciados para o operador, são reconhecidos pelo programa.O uso não autorizado deste programa e seus recursos pode dar origem a um pedido de indenização e / ou ser uma ofensa criminal.Esperamos que todos os usuarios façam um cadastro unico contendo informações reais sobre eles mesmos, o mau uso do programa ou impersonificação de outros pode acarretas em processo.</div>
+                    <input type="button" id="btn_aceitar_termos" name="" value="Aceitar Termos">
+                    <input type="button" id="btn_cancelar" name="" value="Cancelar">
+                    <!-- <div class="aceitar-termos">
+                    </div> -->
+                    <!-- <label id="label-check" for="termos-aceite">Aceitar Termos e Condições de Uso</label>
+                    <input type="checkbox" id="termos-aceite" name="termos" data-role="none"> -->
+                </div> 
+            </div>		
+<!--<input type='date' id='inputHidden' style='background:none;border:none;' />--> 					
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery.mask.js"></script>
+
+<script>
+    populaUf(false);
+    populaCidades(true);
+
+    // $(document).on('click','#termos-aceite',function(){
+    //     if ($("#termos-aceite").prop("checked")) {
+    //         $("#termos-aceite").prop("checked", true);
+    //         $("#cadastro-termos").hide();
+    //     } else {
+    //         $("#termos-aceite").prop("checked", true);
+    //     }
+    // });
+
+</script>
+<!-- ###############################FIM-PÁGINA-CADASTRO###############################

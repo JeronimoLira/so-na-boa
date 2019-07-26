@@ -1,0 +1,62 @@
+<!-- ###############################PÁGINA-PERFIL############################### -->
+
+<div class="page-content" data-role="content" id="perfil">
+    <div class="perfil-header">
+        <img id="img-meu-perfil" src="img/perfil.png" alt="">
+        <h1 id="helper-debug">MEU PERFIL</h1>
+    </div>
+    <div class="img-visu">
+        <div>
+            <span>X</span>
+            <!--img src="img/13508853_972019412915302_3414441719313599299_n.jpg" alt=""-->
+            <img id="fotos-usuario" src='' alt=''>
+        </div>
+        <div style='color:white;display:none;' class='atualizar-foto'>
+            <a href='#' onclick='atualizarFoto()'>
+                <button class='btn' style="height:40px;width:80px;">Utilizar foto</button>
+            </a>
+            <a href='#' onclick='deletarFoto()'>
+                <button class='btn' style="height:40px;width:80px;">Excluir foto</button>
+            </a>
+        </div>
+    </div>
+
+    <div id="perfil-wrapper" style="float:left;">
+        <div id="perfil-dados">
+            <img id="perfil-dados-vip" src="img/perfil-vip.png" alt="">
+            <h1 id="nome"></h1>
+            <h2 id="idade"></h2>
+            <h2 id="genero"></h2>
+            <h3 id="estado_civil"></h3>
+            <h2 id="interesse"></h2>
+            <h2 id="local"></h2>
+            <h2 id='perfil-frase'></h2>
+            <button class="btn btn-cutucar hidden" onclick="visualizaCutucada();">
+                <span>
+                    <i class="fa fa-hand-point-right"></i>
+                    <br />
+                    Cutucar
+                </span>
+            </button>
+        </div>
+    </div>
+    <div id="perfil-estrelas"></div>
+    <div style="float:right;position:relative;" id='div-chat-on' class="hidden">
+        <img src="img/chat_btn.png" id="btton-chat"/>
+    </div>
+    <div style="clear:both"></div>
+    <div id="perfil-fotos">
+        <img src="img/perfil-exemplo.png" alt="">
+    </div>
+</div>
+
+<div id="msg-cutucar">
+    <a>X</a>
+    <img src="img/perfil-exemplo.png" alt="">
+    <h1><img src="img/rod-cut.png" alt=""> Cutucar <span>Renata</span></h1>
+    <textarea name="txt-cutucar" id=""></textarea>
+    <button>Enviar</button>
+</div>
+<script language="javascript" type="text/javascript" src="js/perfil.js"></script>
+<!-- ###############################FIM-PÁGINA-PERFIL############################### -->
+ 

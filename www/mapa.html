@@ -1,0 +1,107 @@
+<style>
+  /* Always set the map height explicitly to define the size of the div
+   * element that contains the map. */
+  #map_canvas {
+    height: 100%;
+    width: 105%;
+    position: fixed!important;
+    /* height: auto; */
+    overflow: hidden;
+  }
+
+
+</style>
+
+<div class="page-content" data-role="content" id="mapa">
+  <div id="map_canvas"></div>
+
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJqoVE_48i_2Kqe1RtkVZgBBYmR8HYkL4&callback=initMap" async defer></script>
+
+  <script>
+    var servidor = window.localStorage.getItem('servidor');
+    var lat      = window.localStorage.getItem('lat');
+    var long     = window.localStorage.getItem('long');
+
+    function initMap() {
+      var minhaLocalizacao = new google.maps.LatLng(lat, long);
+
+      var map = new google.maps.Map(document.getElementById('map_canvas'), {
+        center: minhaLocalizacao,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoom: 14
+      });
+
+      setMarkers(map);
+    }
+
+    function setMarkers(map) {
+
+      // Shapes define the clickable region of the icon. The type defines an HTML
+      // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+      // The final coordinate closes the poly by connecting to the first coordinate.
+      var shape = {
+        coords: [1, 1, 1, 20, 18, 20, 18, 1],
+        type: 'poly'
+      };
+
+      $.post(servidor + "restaurante.php",{lista:1}).done(function(data){
+        if(data != "") {
+          var d = $.parseJSON(data);
+          //console.log(data);
+          if (navigator.geolocation) {
+
+            for(i = 0; i < d.length; i++)
+            {
+              // Try HTML5 geolocation.
+              var geo  = new google.maps.LatLng(d[i].latitude , d[i].longitude);
+
+              var marker = new google.maps.Marker({
+                position: geo,
+                map: map,
+                icon: 'img/icon-mapa.png',
+                shape: shape,
+                zIndex: i
+              });
+
+                var restaurante = d[i].nome;
+                var infowindow = new google.maps.InfoWindow({content:"<div style='text-align:center'><b>"+restaurante.toUpperCase()+"</b>"+"</div>"});
+
+                marker.setMap(map);
+                infowindow.open(map,marker);
+
+            }
+
+            //console.log("lat, long "+lat+" / "+long);
+            var geo = new google.maps.LatLng(lat, long);
+
+            var marker = new google.maps.Marker({
+              position: geo,
+              map: map,
+              icon: 'img/icon-mapa.png',
+              shape: shape,
+              zIndex: 0
+            });
+
+            var restaurante = window.localStorage.getItem('restNome');
+            var infowindow = new google.maps.InfoWindow({content:"<div style='text-align:center'><b>"+restaurante.toUpperCase()+"</b>"+"<br>Você!</div>"});
+
+            marker.setMap(map);
+            infowindow.open(map,marker);
+          } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, geo.getCenter());
+          }
+        }
+      })
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+                            'Error: The Geolocation service failed.' :
+                            'Error: Your browser doesn\'t support geolocation.');
+    }
+
+  </script>
+</div>

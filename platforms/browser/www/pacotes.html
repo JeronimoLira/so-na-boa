@@ -1,0 +1,142 @@
+<div class="page-content" data-role="content" id="pedidos">
+    <div class="pedidos-header">
+        <img src="img/menu_pacotes.png" alt="">
+        <h1>Pacotes e Ofertas</h1>
+        <span>Selecione o item de interesse</span>
+    </div>
+
+    <div id="pedidos-finalizar">
+        <h2>Sua Conta esta em: </h2>
+        <h2> R$<span class="total">0,00</span><span class="itens"></span></h2>
+        <button id="0">Comanda</button>
+    </div>
+
+    <div class="pedidos-cat">
+        <span>Nenhuma categoria disponível</span>
+    </div>
+
+    <ul>
+    </ul>
+
+</div>
+
+<script>
+    var rest = window.localStorage.getItem('rest');
+    var servidor = window.localStorage.getItem('servidor');
+    var usuario = window.localStorage.getItem('usuarioId');
+    var mesa = window.localStorage.getItem('mesa');
+
+    $.post(servidor + 'categorias.php', {id: rest, filtro: ''}, function () {
+    }).done(function (data) {
+        $('.pedidos-cat').html(data);
+    });
+
+    $.post(servidor + 'menu.php', {id: rest}, function () {
+    }).done(function (data) {
+        $('#pedidos ul').html(data);
+    });
+
+    function retornaTotal() {
+        $.post(servidor + 'conta.php', {usuario: usuario}, function () {
+        }).done(function (data) {
+            $(".total").html(data);
+        });
+    }
+
+    retornaTotal();
+
+    $(document).ready(function () {
+        $('#pedidos-finalizar button').on('click', function () {
+            var id = this.id;
+
+            $('#content').load('finalizar.html');
+        });
+
+        $('.pedidos-cat').on('click', '.filtrar', function () {
+            var filtro = this.id;
+            //console.log(filtro);
+
+            $.post(servidor + 'menu.php', {id: rest, filtro: filtro}, function () {
+            })
+                .done(function (data) {
+                    $('#pedidos ul').html(data);
+                });
+        });
+
+        $('#pedidos ul').on('click', '.comprar', function () {
+            var compra = this.id;
+            var pedido = '0';
+
+            if (window.localStorage.getItem('pedido') == 'undefined'
+                || window.localStorage.getItem('pedido') === undefined
+                || window.localStorage.getItem('pedido') == null)
+                pedido = '0';
+            else
+                pedido = window.localStorage.getItem('pedido');
+
+            function onPrompt(value) {
+
+                // Valida quantidade
+                if (parseInt(value) > 0) {
+                    qtdPedido = value;
+
+                    $.post(servidor + 'compra.php', {
+                        usuario: usuario,
+                        id: compra,
+                        rest: rest,
+                        pedido: pedido,
+                        qtde: qtdPedido
+                    }, function () {
+                    }).done(function (data) {
+                        toastr.success('Pedido realizado com sucesso!', 'Só na Boa');
+                        retornaTotal();
+                    });
+                }
+            }
+
+            alertify.prompt('Quantidade', 'Por favor diga a quantidade', '',
+                function (evt, value) {
+                    onPrompt(value)
+                },
+                function () {
+                }
+            ).set('labels', {ok: 'Confirmar', cancel: 'Cancelar'});
+
+        });
+
+        function valorTotal(valor) {
+            var total_str = $('#pedidos-finalizar .total').text();
+            total_str = total_str.replace(',', '.');
+            var total = parseFloat(total_str);
+
+            total = total + valor;
+
+            var itens_str = $('#pedidos-finalizar .itens').text();
+            var itens = parseInt(itens_str);
+            itens++;
+
+            $('#pedidos-finalizar .itens').text(itens);
+            $('#pedidos-finalizar .total').text(total.toFixed(2));
+        }
+
+        if (mesa == undefined || mesa == null || mesa == 0) {
+
+            alertify.prompt( 'Comanda', 'Por favor digite o número da Comanda', '',
+                function(evt, value) { onPrompt2(value) },
+                function() {}
+            ).set('labels', {ok:'Confirmar', cancel:'Cancelar'});
+
+        }
+
+        function onPrompt2(value) {
+
+            // Valida se a mesa foi inserida
+            if(parseInt(value) > 0){
+                mesa = value;
+                window.localStorage.setItem('mesa',mesa);
+            }
+
+        }
+    });
+</script>
+<!-- ###############################FIM-PÁGINA-PEDIDOS############################### -->

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="
+
+        font-src   * 'unsafe-inline';
+        style-src  * 'unsafe-inline';
+        script-src * 'unsafe-inline' 'unsafe-eval';
+        media-src *;">
+<!-- default-src *; -->
+
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.Jcrop.css" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+    <!-- Modal -->
+    <link rel="stylesheet" href="assets/alertifyjs/css/alertify.min.css">
+    <link rel="stylesheet" href="assets/alertifyjs/css/themes/default.min.css">
+
+    <!-- Demais estilos -->
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/cadastrar.css" />
+
+    <!-- Importando o Bootstrap -->
+    <!-- <link rel='stylesheet' href="bootstrap\dist\css\bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="bootstrap\dist\js\bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
+
+    <title>Só na Boa</title>
+</head>
+
+<body id="bg">
+    <div class="app">
+        <div data-role="page" id="pag-login">
+            <div data-role="header"  data-id="main-header"  data-position="fixed" style="position: fixed;width: 104%;top: 0;z-index: 2;">
+                <section class="ui-grid-a header">
+                    <a data-transition="slide"  class="ui-block-a" ><img  src="img/logo2x.png" alt="So na Boa" class="btn-logo" /></a>
+                    <ul class="ui-block-b ui-grid-b">
+                        <li class="ui-block-b" id="notifica">
+                            <a class="header-avisos menu-usuario"  data-transition="slide">
+                                <img src="img/mensagem.png" alt="Mensagem" />
+                            </a>
+                        </li>
+                        <li class="ui-block-b" id="tour">
+                            <a class="menu-tour"  data-transition="slide" alt="Tour">
+                                <i class="fas fa-map-signs"></i>
+                            </a>
+                        </li>
+                        <li class="ui-block-c">
+                            <a class="MenuFlutuanteBotao" href="javascript: void(0);">
+                                <img src="img/menu.png" alt="Menu" />
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+                <div id="menu_bg" class="menu_flutuante">
+                    <ul>
+                        <li class='menu-usuario'>
+                            <a class='header-perfil'>
+                                <img src="img/perfil.png" />MEU PERFIL
+                            </a>
+                        </li>
+                        <li class='menu-usuario'>
+                            <a class='header-saida'>
+                                <img src="img/menu_entrada.png" />ENTRADA/SAÍDA
+                            </a>
+                        </li>
+                        <li class='menu-usuario'>
+                            <a class='header-avisos2'href="javascript:void(0)">
+                                <img src="img/menu_chat.png" />CHAT
+                            </a>
+                        </li>
+                        <li>
+                            <a class="header-cadastro">
+                                <img src="img/menu_cadastro.png" />CADASTRO
+                            </a>
+                        </li>
+                        <li class='menu-usuario'>
+                            <a class='header-menu'>
+                                <img src="img/menu_menu.png" />MENU/PEDIDOS
+                            </a>
+                        </li>
+                        <li class='menu-usuario'>
+                            <a class='header-delivery'>
+                                <i class="fa fa-utensils"></i> &nbsp; DELIVERY
+                            </a>
+                        </li>
+                        <li>
+                            <a class="header-local" href="javascript:void(0)">
+                                <img src="img/menu_local.png" />LOCALIZAÇÃO
+                            </a>
+                        </li>
+                        <li class='menu-usuario'>
+                            <a class='header-fidelidade'>
+                                <img src="img/menu_pontos.png" />
+                                FIDELIDADE
+                            </a>
+                        </li>
+                        <li class='menu-usuario'>
+                            <a class='header-pagar'>
+                                <img src="img/menu_pagar.png" />FECHAR CONTA
+                            </a>
+                        </li>
+
+                        <li class='menu-usuario'>
+                            <a class='header-estatistica'>
+                                <img src="img/icon-chart.png" />CONSUMO DO USUÁRIO
+                            </a>
+                        </li>
+                        <li>
+                            <a class='header-faleconosco' href="javascript:void(0)">
+                                <img src="img/question.png" alt="Perguntas" />FALE CONOSCO
+                            </a>
+                        </li>
+                        <li>
+                            <a class='header-sobre' href="javascript:void(0)">
+                                <img src="img/menu_sobre.png" />SOBRE
+                            </a>
+                        </li>
+                        <li>
+                            <a class='header-sair' href="javascript:void(0)">
+                                <img src="img/power.png" />SAIR
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div style="z-index: 99999" id="div-carregando">
+                <img src="img/loading.gif" alt="">
+            </div>
+
+            <div data-role="main" id="main-principal" class="ui-content">
+                <div data-role="content" id="content">
+                    <div  id="login">
+                        <div id="form_login">
+                            <div class="ui-grid-b" id="form_login_senha">
+                                <input type="text"     id="lg_login" name="login" value="" placeholder="Usuário ou Telefone"/>
+                                <input type="password" id="lg_senha" name="senha" value="" placeholder="Senha" class="ui-block-a"/>
+                                <button class="ui-block-c" id="entrar">
+                                    <img src="img/btn-login.png" alt="Login" />
+                                </button>
+
+                                <div id="div-exibirSenha">
+                                    <div class="check-recover">
+                                        <input id="exibirSenha" name="exibirSenha" type="checkbox">
+                                    </div>
+                                    <div class="text-recover">
+                                        <label for="exibirSenha">Exibir Senha</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="link_social">
+                            <h1>Faça seu login com:</h1>
+                            <ul class="ui-grid-b">
+                                <li class="ui-block-a"><img src="img/btn-facebook.png" alt="login com facebook" /></li>
+                                <li class="ui-block-b"><img src="img/btn-twitter.png"  alt="login com twitter" /></li>
+                                <li class="ui-block-c"><img src="img/btn-gplus.png"    alt="login com google mais" ></li>
+                            </ul>
+                        </div>
+                        <div id="cadastre-se">
+                            <a data-transition="slide" class="btn-cadastrar" >
+                                <img src="img/btn-cadastre.png" alt="Cadastre-se" />
+                                CADASTRAR-SE
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Publicidade Roda-Pé-->
+            <div class="div_publicidade_home rodape rodape" style="position: fixed;">
+                <img class="publicidade_circular circulo0" src=""/>
+                <img class="publicidade_circular circulo1" src=""/>
+                <img class="publicidade_circular circulo2" src=""/>
+                <img class="publicidade_circular circulo3" src=""/>
+                <img class="publicidade_circular circulo4" src=""/>
+                <img class="publicidade_circular circulo5" src=""/>
+
+                <div class="div_publicidade_quadrada">
+                    <img class="publicidade_quadrada quadrado6" src=""/>
+                    <img class="publicidade_quadrada quadrado7" src=""/>
+                    <img class="publicidade_quadrada quadrado8" src=""/>
+                    <img class="publicidade_quadrada quadrado9" src=""/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="js/form.jquery.js"></script>
+    <script type="text/javascript" src="js/jquery.Jcrop.js"></script>
+    <script type="text/javascript" src="js/toastr.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/utilitario.js"></script>
+    <script type="text/javascript" src="js/popularUfCidade.js"></script>
+    <script type="text/javascript" src="js/jcarousel.js"></script>
+    <script type="text/javascript" src="assets/alertifyjs/alertify.min.js"></script>
+</body>
+
+</html>

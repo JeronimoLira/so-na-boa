@@ -1,0 +1,94 @@
+
+<!-- ###############################PÁGINA-FINALIZAR############################### -->
+       
+        <div class="page-content" data-role="content" id="finalizar">
+            <div class="pedidos-header">
+                <img src="img/waiter6.png" alt="">
+                <h1>Detalhes do Pedido</h1>
+                <span>Veja abaixo os pedidos feitos por você em nosso restaurante</span>
+            </div>
+            
+            <ul>                           
+                
+            </ul>
+
+            <div id="finalizar-enviado-bg">
+                <div id="finalizar-enviado">
+                    <a id="finalizar-enviado-fechar">x fechar</a>
+                    <div>
+                        <h2>PEDIDO ENVIADO</h2>
+                        <h1>COM SUCESSO!</h1>
+                    </div>                
+                    <p>
+                        <span id="finalizar-enviado-ped">Pedido: 8965</span>
+                        <span id="finalizar-enviado-val">Valor: R$ 89,55</span>
+                    </p>
+                    <p id="finalizar-enviado-cli">Cliente: João Vasconcelos</p>
+                </div>
+            </div>
+
+            <div style="clear:both"></div>
+			
+			 <div id="cadastro-termos">
+                <h1>Termos e Condições de Uso</h1>
+                <div>O conteúdo deste programa é para sua informação e uso geral. Ele está sujeito a alteração sem aviso prévio. Os cadastros de usuario devem ser individuais, um usuario deve ter apenas uma conta, a criação de contas falsas para mau-uso poderá ser classificado como crime de falsidade ideologica. O uso de qualquer informação ou recurso desse programa é inteiramente por sua conta e risco. Será sua responsabilidade para assegurar que quaisquer produtos, serviços ou informação disponibilizada através deste programa atenda as suas necessidades específicas. Este programa contém material que é de propriedade ou licenciados. Este material inclui , mas não está limitado a: imagens, produtos, graficos, ofertas e estatisticas. Todas as marcas reproduzidas neste programa, que não são propriedade da, ou licenciados para o operador, são reconhecidos pelo programa.O uso não autorizado deste programa e seus recursos pode dar origem a um pedido de indenização e / ou ser uma ofensa criminal.Esperamos que todos os usuarios façam um cadastro unico contendo informações reais sobre eles mesmos, o mau uso do programa ou impersonificação de outros pode acarretas em processo.</div>
+                <input type="checkbox" id="termos-aceite" name="termos" data-role="none">
+                <label for="termos">Aceitar Termos e Condições de Uso</label>
+            </div> 
+    
+        <script>
+            var rest     = window.localStorage.getItem('rest');
+            var servidor = window.localStorage.getItem('servidor');
+            var usuario  = window.localStorage.getItem('usuarioId');
+            var pedido   = window.localStorage.getItem('pedido');
+                            
+            $.post(servidor + 'compra.php',{id:pedido, finaliza:'1', rest:rest, usuario:usuario}, function(){})
+                .done(function(data){                
+                    $('#finalizar ul').html(data);
+            });
+            
+            // Enviar Pedido
+            $("#finalizar-enviar-pedido").on('click',function(){
+                $.post(servidor + 'compra.php',{pedido:pedido,enviar:1})
+                    .done(function(data){
+                        //console.log(data);
+                        var ret = $.parseJSON(data);
+                        
+                        $('#finalizar-enviado-val').text('Total: R$' + ret.valor);  
+                        $('#finalizar-enviado-ped').text('Pedido: ' + ret.pedido);
+                        $('#finalizar-enviado-cli').text('Cliente: ' + ret.nome);
+                        
+                        window.localStorage.setItem('pedido','0');
+                    
+                        $('#finalizar-enviado-bg').fadeIn(300);
+                });
+            });
+            
+
+            $('#finalizar-enviado-fechar').on('click',function(){
+                $('#content').load('home.html');
+            });
+            
+            // Excluir Pedido
+            $('#finalizar ul').on('click','.excluir',function(){
+                var itemId = this.id;
+                $.post(servidor + 'compra.php',{pedido:pedido,id:itemId,exclui:'1'}, function(){})
+                    .done(function(data){
+                        $('#finalizar ul #' + itemId).parents('li').remove();
+                        $('#finalizar').append(data)
+                });
+            });
+            
+            // Alterar Pedido
+            $('#finalizar ul').on('change','.altera',function(){ 
+                var itemId = this.id;
+                var qt = $(this).val();
+               
+                $.post(servidor + 'compra.php',{altera:'1',usuario:usuario,id:itemId,rest:rest,pedido:pedido,qt:qt}, function(){})
+                    .done(function(data){
+                        $('#finalizar').append(data);
+                });
+            });
+        </script>
+            
+<!-- ###############################FIM-PÁGINA-FINALIZAR############################### -->

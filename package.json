@@ -1,0 +1,62 @@
+{
+  "name": "com.atlanteam.sonaboa",
+  "version": "1.0.0",
+  "private": true,
+  "displayName": "So na Boa",
+  "cordova": {
+    "platforms": [
+      "wp8",
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-battery-status": {},
+      "cordova-plugin-camera": {},
+      "cordova-plugin-media-capture": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-dialogs": {},
+      "cordova-plugin-geolocation": {},
+      "cordova-plugin-globalization": {},
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-vibration": {},
+      "cordova-plugin-console": {},
+      "cordova-plugin-contacts": {},
+      "cordova-plugin-device-motion": {},
+      "cordova-plugin-device-orientation": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-compat": {},
+      "cordova-plugin-file": {},
+      "cordova-plugin-file-transfer": {}
+    }
+  },
+  "dependencies": {
+    "bootstrap": "^4.2.1",
+    "chrome": "^0.1.0",
+    "cordova-android": "^8.0.0",
+    "cordova-browser": "^5.0.4",
+    "cordova-plugin-backbutton": "^0.3.0",
+    "cordova-plugin-battery-status": "*",
+    "cordova-plugin-camera": "*",
+    "cordova-plugin-compat": "1.2.0",
+    "cordova-plugin-console": "*",
+    "cordova-plugin-contacts": "*",
+    "cordova-plugin-device": "*",
+    "cordova-plugin-device-motion": "*",
+    "cordova-plugin-device-orientation": "*",
+    "cordova-plugin-dialogs": "*",
+    "cordova-plugin-file": "^5.0.0",
+    "cordova-plugin-file-transfer": "^1.7.0",
+    "cordova-plugin-geolocation": "*",
+    "cordova-plugin-globalization": "*",
+    "cordova-plugin-inappbrowser": "*",
+    "cordova-plugin-media-capture": "^2.0.0",
+    "cordova-plugin-network-information": "*",
+    "cordova-plugin-splashscreen": "*",
+    "cordova-plugin-statusbar": "*",
+    "cordova-plugin-vibration": "*",
+    "cordova-plugin-whitelist": "*",
+    "google-maps": "^3.3.0"
+  }
+}

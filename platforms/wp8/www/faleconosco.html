@@ -1,0 +1,57 @@
+      <style>
+        textarea {
+            width: 100%;
+            font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+            font-size:12px;
+        }
+        input {
+            font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+            font-size:12px;
+        }
+        main-principal {
+            margin-top: 6.4em;
+            position: fixed;
+        }
+        width: 94.3%;
+        /* margin: 1em; */
+        /* margin-left: 1em; */
+        margin-right: 1em;
+        /* position: fixed; */
+
+
+    </style>
+
+
+<!-- ###############################PÁGINA-CADASTRO############################### -->
+    <!--
+    <script>
+        $('body').css('background-image','url(img/bg-cadastro.png)');
+    </script>
+    -->
+    <div id="mensagens"></div>
+
+	<div class="page-content" data-role="content" id="fidelidade">
+		<div class="fidelidade-header">
+			<img src="img/question.png" alt="fale conosoco">
+			<h1>FALE CONOSCO</h1>
+		</div>
+	</div>
+    <div id="cadastro" class="faleconosco">
+        <!-- <form action="#" > -->
+        <input type="hidden" name="first_name" placeholder="Nome">
+        <input type="hidden" name="last_name" placeholder="Apelido">
+        <input type="hidden" name='telefone' placeholder="Telefone">
+        <input type="hidden" name="rg" placeholder="RG">
+        <input type="hidden" name="id">
+        <input type="hidden" name="cidade" placeholder="Cidade">
+
+        <input type="email" name="email" placeholder=" E-mail" required >
+        <br>
+        <br>
+        <textarea rows="8" name="mensagem" placeholder=" Digite sua mensagem aqui." cols="50"></textarea>
+        <br>
+        <button id="cadastre-se2" class="faleconosco-botao" name="submit">
+            <a class="btn-cadastro">ENVIAR</a>
+        </button>
+        <!-- </form> -->
+    </div>

@@ -1,0 +1,124 @@
+
+<!-- ###############################PÁGINA-VERIFICA############################### -->
+
+<style>
+    /* caixapreta{
+        background-color: black;
+    }*/
+    #preco-saida{
+        font-size: 12px;
+    }
+</style>
+
+<div class="page-content caixapreta" data-role="content" id="verifica">
+    <div class="entradasaida-header">
+        <img src="img/menu_entrada.png" alt="">
+        <h1>ENTRADA/SAÍDA</h1>
+    </div>
+    <div class="divisoria">
+        <h1>ENTRADA</h1>
+    </div>
+    <div id="verifica-cliente">
+        <img id="qr-usuario" src="img/Camada-3.png" alt="">
+        <h1>Cliente Cadastrado</h1>
+        <h2 id="verifica-cliente-nome"></h2>
+        <h2 id="verifica-cliente-rg">RG:  </h2>
+        <h2 id="verifica-cliente-cod">Código: </h2>
+        <h2 id="verifica-cliente-fone">Fone: </h2>
+        <h3 id="verifica-cliente-data">Cliente desde: </h3>
+    </div>
+    <div class="divisoria">
+        <h1>SAÍDA</h1>
+    </div>
+    <div id="verifica-saida">
+        <img id="qr-verifica" src="img/camada_zero.png" alt="" style="display:none">
+        <h1 id="status-saida">Conta não paga</h1>
+        <div class="ui-grid-a custom-a">
+            <div class="ui-block-a"><span id="preco-saida"></span></div>
+            <div class="ui-block-b custom-b"><img src="img/credit-card8.png" alt=""><span style='display:none;' id='iconePag'>Pago</span></div>
+        </div>
+    </div>
+    <div style="clear:both"></div>
+
+    <script>
+        var id = window.localStorage.getItem('usuarioId'); 
+        var servidor = window.localStorage.getItem('servidor');
+        var rest =  window.localStorage.getItem('rest');        
+        var statusPagamento = 0;
+        var qrp = null;
+
+
+        function retornaTotal(){
+            $.post(servidor + 'contap.php',{usuario:id, rest:rest}, function(){}).done(function(data){
+                $('#preco-saida').text("Saída Liberada");
+                $('#status-saida').hide();
+            });
+        }
+        
+        //valida o pagamento da conta
+        var validaPagamento = function(){	
+            if (statusPagamento == 0) {
+                $.post(servidor + 'verificacontaPaga.php',{id:id, rest:rest},function(){}).done(function(data){
+                    console.log(data);
+                    if(data.trim() == "OK"){
+                        $("#iconePag").show();
+                        $('#qr-verifica').show();
+                        $('#qr-verifica').attr('src',qrp);
+                        retornaTotal();
+                        statusPagamento = 1;
+                    } else {
+                        contaNaoPaga();
+                    }
+                });
+            }
+        }
+
+        function contaNaoPaga(){
+            $.post(servidor + 'conta.php',{usuario:id}, function(){}).done(function(data){
+                $('#preco-saida').text(data);
+            });
+            setTimeout(validaPagamento, 5000);
+        }
+
+        $.post(servidor + 'dados.php',{id:id},function(){}).done(function(data){
+            var usuario = $.parseJSON(data);
+
+            var id = usuario.usr_id;
+            var nome = usuario.usr_nome;
+            var cad = usuario.usr_data_cadastro;
+            var fone = usuario.usr_telefone;
+            var rgu = usuario.rg;
+            var qr = "https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=" + servidor + "dados.php?id=" + id + "&choe=UTF-8&chld=L|1";
+            qrp = "https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=" + servidor + "compra.php?verifica=1&id=" + id + "&rest="+ rest +"&choe=UTF-8&chld=L|1";
+
+            var d = new Date(cad);
+            var day = d.getDate();
+            var month = d.getMonth() + 1;
+            var year = d.getFullYear();
+            if (day < 10) {
+                day = "0" + day;
+            }
+            if (month < 10) {
+                month = "0" + month;
+            }
+            var date = day + "/" + month + "/" + year;
+
+            $('#qr-usuario').attr('src',qr);
+
+            $('#verifica-cliente-nome').text(nome);
+            $('#verifica-cliente-cod').text('Código: ' + id);
+            $('#verifica-cliente-data').text('Cliente desde: ' + date);
+            $('#verifica-cliente-fone').text('Fone: ' + fone);
+            $('#verifica-cliente-rg').text("RG:"+rgu);
+            validaPagamento();
+        });
+
+    </script>
+<!-- <div id="link_social">
+    <ul class="ui-grid-b" align="middle">
+        <li class="ui-block-a"><img src="img/brama.png" alt="brama ico" height="56" width="56" /></li>
+        <li class="ui-block-b"><img src="img/skol.png" alt="skol ico" height="56" width="56" /></li>
+        <li class="ui-block-c"><img src="img/antartica.png" alt="antartica ico" height="56" width="56"></li>
+    </ul>
+</div> -->
+<!-- ###############################FIM-PÁGINA-FIDELIDADE############################### -->
